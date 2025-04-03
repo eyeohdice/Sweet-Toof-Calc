@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Toof Quote Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      background-color: #f5f5f5;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 { text-align: center; }
+    label, select, input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .checkbox-group label { width: 48%; }
+    .results {
+      background-color: #e0e0e0;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    .logo-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo-container img {
+      max-width: 250px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-container">
+    <img src="sweet-toof-logo.png" alt="Sweet Toof Logo">
+  </div>
+
+  <h1>Sweet Toof – Quote Generator</h1>
+
+  <label>Client Name
+    <input type="text" id="clientName">
+  </label>
+
+  <label>Material
+    <select id="material">
+      <option value="cobalt_chrome">Cobalt Chrome (€60)</option>
+      <option value="gold_plated">Gold Plated (€100)</option>
+      <option value="solid_gold">Solid Gold (€250)</option>
+    </select>
+  </label>
+
+  <label>Number of Teeth
+    <input type="number" id="toothCount" value="1" min="1">
+  </label>
+
+  <label>Add-ons</label>
+  <div class="checkbox-group" id="addOns"></div>
+
+  <button onclick="generateQuote()">Generate Quote</button>
+
+  <div id="results" class="results" style="display:none;"></div>
+
+  <script>
+    const BASE_PRICES = {
+      cobalt_chrome: 60,
+      gold_plated: 100,
+      solid_gold: 250
+    };
+
+    const ADD_ONS = {
+      cutout: 30,
+      fang_shaping: 20,
+      engraving: 40,
+      gem_inlay: 75,
+      open_face: 25,
+      texture_finish: 30,
+      multi_color_plating: 30,
+      custom_design: 100
+    };
+
+    const CAST_COST_PER_TOOTH = 20;
+    const IMPRESSION_COST = 3;
+
+    const addOnsContainer = document.getElementById("addOns");
+    for (const [key, price] of Object.entries(ADD_ONS)) {
+      const label = document.createElement("label");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = key;
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(` ${key.replace('_', ' ')} (€${price})`));
+      addOnsContainer.appendChild(label);
+    }
+
+    function generateQuote() {
+      const clientName = document.getElementById("clientName").value || "Unnamed Client";
+      const material = document.getElementById("material").value;
+      const toothCount = parseInt(document.getElementById("toothCount").value);
+      const selectedAddOns = Array.from(document.querySelectorAll("#addOns input:checked")).map(cb => cb.value);
+
+      const basePrice = BASE_PRICES[material];
+      const addOnTotal = selectedAddOns.reduce((sum, key) => sum + ADD_ONS[key], 0);
+      const totalSale = (basePrice + addOnTotal) * toothCount;
+      const totalCost = CAST_COST_PER_TOOTH * toothCount + IMPRESSION_COST;
+      const profit = totalSale - totalCost;
+      const margin = ((profit / totalSale) * 100).toFixed(2);
+      const deposit = (totalSale * 0.5).toFixed(2);
+
+      const resultDiv = document.getElementById("results");
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = `
+        <h3>Quote for ${clientName}</h3>
+        <p><strong>Material:</strong> ${material.replace('_', ' ')}</p>
+        <p><strong>Number of Teeth:</strong> ${toothCount}</p>
+        <p><strong>Add-Ons:</strong> ${selectedAddOns.length ? selectedAddOns.join(', ') : 'None'}</p>
+        <p><strong>Total Sale Price:</strong> €${totalSale}</p>
+        <p><strong>Total Cost:</strong> €${totalCost}</p>
+        <p><strong>Profit:</strong> €${profit}</p>
+        <p><strong>Profit Margin:</strong> ${margin}%</p>
+        <p><strong>Deposit Due (50%):</strong> €${deposit}</p>
+      `;
+    }
+  </script>
+</body>
+</html>

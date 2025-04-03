@@ -206,7 +206,11 @@
   <div id="results" class="results" style="display:none;"></div>
   <div id="profitInfo" class="profit-section" style="display:none;"></div>
 
-  <audio id="chaChing" src="https://www.soundjay.com/misc/sounds/cash-register-01a.mp3" preload="auto"></audio>
+  <!-- 🔊 Audio: Make sure this file exists next to your HTML! -->
+  <audio id="chaChing" preload="auto">
+    <source src="cash-register.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
     const BASE_PRICES = {
@@ -281,11 +285,13 @@
 
     function generateQuote() {
       const sound = document.getElementById('chaChing');
-      sound.volume = 1.0;
-      sound.currentTime = 0;
-      sound.play().catch(e => {
-        console.warn("Cha-ching sound failed to play:", e);
-      });
+      if (sound) {
+        sound.volume = 1.0;
+        sound.currentTime = 0;
+        sound.play().catch(e => {
+          console.warn("Cha-ching failed:", e);
+        });
+      }
 
       const clientName = document.getElementById("clientName").value || "Unnamed Client";
       const material = document.getElementById("material").value;

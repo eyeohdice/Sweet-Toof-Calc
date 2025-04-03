@@ -4,49 +4,58 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sweet Toof Quote Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <style>
     :root {
-      --rojo: #D8342E;
-      --rose: #EA86A3;
-      --black: #000000;
-      --gold: #E7AC15;
-      --aero: #22C1EB;
+      --red: #D8342E;
+      --yellow: #E7AC15;
+      --blue: #374D7D;
       --white: #FFFFFF;
+      --black: #000000;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background-color: var(--gold);
-      color: var(--black);
+      font-family: 'Fredoka One', sans-serif;
+      background-color: var(--blue);
+      color: var(--white);
       max-width: 700px;
       margin: 2rem auto;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.2);
+      border: 5px solid var(--yellow);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
 
     h1 {
       text-align: center;
       margin-bottom: 1.5rem;
-      color: var(--aero);
-      text-shadow: 1px 1px var(--black);
+      color: var(--yellow);
+      text-shadow: 2px 2px var(--black);
+      font-size: 2.2rem;
     }
 
     label {
       display: block;
       margin-bottom: 1rem;
-      font-weight: bold;
     }
 
     select, input[type="text"], input[type="number"] {
       width: 100%;
       padding: 0.6rem;
       border-radius: 6px;
-      border: 2px solid var(--black);
+      border: 2px solid var(--yellow);
       font-size: 1rem;
       margin-top: 0.3rem;
       box-sizing: border-box;
       background-color: var(--white);
+      color: var(--black);
+      font-family: 'Fredoka One', sans-serif;
+    }
+
+    input[readonly] {
+      background-color: #eee;
+      color: #999;
+      cursor: not-allowed;
     }
 
     .form-row {
@@ -60,20 +69,20 @@
     }
 
     button {
-      background-color: var(--rojo);
+      background-color: var(--red);
       color: var(--white);
       border: none;
       padding: 0.75rem;
       margin-top: 0.5rem;
       border-radius: 6px;
-      font-size: 1rem;
-      font-weight: bold;
+      font-size: 1.1rem;
+      font-family: 'Fredoka One', sans-serif;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     button:hover {
-      background-color: var(--aero);
+      background-color: var(--yellow);
       color: var(--black);
       transform: scale(1.03);
     }
@@ -86,62 +95,68 @@
 
     .checkbox-label {
       display: grid;
-      grid-template-columns: 1fr 100px 100px;
+      grid-template-columns: 1fr 80px 80px;
       align-items: flex-start;
-      background-color: var(--rose);
+      background-color: var(--white);
       padding: 0.8rem;
       border-radius: 8px;
       gap: 10px;
-      border: 2px solid var(--black);
+      border: 2px solid var(--yellow);
+      color: var(--black);
+    }
+
+    .checkbox-label span.description {
+      font-size: 0.8rem;
+      color: #444;
+      display: block;
+      margin-top: 4px;
     }
 
     .checkbox-label input[type="number"] {
       width: 100%;
-      box-sizing: border-box;
       padding: 0.4rem;
-      border: 1px solid #ccc;
+      border: 2px solid var(--blue);
       border-radius: 4px;
     }
 
-    .results {
+    .results, .profit-section {
       background-color: var(--white);
+      color: var(--black);
       padding: 1rem;
-      border-left: 5px solid var(--black);
+      border-left: 5px solid var(--yellow);
       border-radius: 8px;
       margin-top: 1.5rem;
-      color: var(--black);
+      text-shadow: none;
+      font-family: Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .results p, .profit-section p {
+      margin: 0.4rem 0;
     }
 
     .logo-container {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
     .logo-container img {
-      max-width: 250px;
+      max-width: 310px;
       height: auto;
+      margin-bottom: 10px;
     }
 
     .logo-container a {
-      margin-top: 0.5rem;
-      font-weight: bold;
-      color: var(--rojo);
-      text-decoration: none;
-      white-space: nowrap;
       display: inline-block;
+      margin-top: 0.5rem;
+      color: var(--yellow);
+      text-decoration: none;
+      font-size: 1.1rem;
     }
 
     .logo-container a:hover {
       text-decoration: underline;
-    }
-
-    .profit-section {
-      display: none;
-      margin-top: 1rem;
-      background: var(--white);
-      padding: 1rem;
-      border-radius: 8px;
-      border-left: 4px solid var(--black);
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -149,7 +164,7 @@
 <body>
   <div class="logo-container">
     <img src="sweet-toof-logo.png" alt="Sweet Toof Logo" />
-    <a href="https://www.instagram.com/Sweet.Toof.cy" target="_blank">Contact on Instagram for custom orders</a>
+    <a href="https://www.instagram.com/Sweet.Toof.cy" target="_blank">@SweetToof.cy – Book Now!</a>
   </div>
 
   <h1>Sweet Toof – Quote Calculator</h1>
@@ -175,7 +190,7 @@
     </select>
   </label>
 
-  <label>Add-ons (enter how many teeth use each and price per add-on)</label>
+  <label>Add-ons (how many teeth use each and cost per tooth)</label>
   <div class="checkbox-group" id="addOns"></div>
 
   <button onclick="generateQuote()">Generate Quote</button>
@@ -183,7 +198,9 @@
   <button onclick="revealProfit()">Show Profit (Locked)</button>
 
   <div id="results" class="results" style="display:none;"></div>
-  <div id="profitInfo" class="profit-section"></div>
+  <div id="profitInfo" class="profit-section" style="display:none;"></div>
+
+  <audio id="chaChing" src="https://www.soundjay.com/misc/sounds/cash-register-01a.mp3" preload="auto"></audio>
 
   <script>
     const BASE_PRICES = {
@@ -193,34 +210,13 @@
     };
 
     const DEFAULT_ADD_ONS = {
-      "Cutouts / Windows": {
-        price: 30,
-        description: "Windows or shapes carved into the grill (hearts, stars, drips, etc.)"
-      },
-      "Open Face": {
-        price: 20,
-        description: "Just the bottom edge of the tooth."
-      },
-      "Engraving": {
-        price: 40,
-        description: "Add letters or small symbols to your grill."
-      },
-      "Gem Inlay": {
-        price: 75,
-        description: "Set a gem into the tooth."
-      },
-      "Texture Finish": {
-        price: 30,
-        description: "Matte, brushed, or textured surface."
-      },
-      "Multi-Tooth Concepts": {
-        price: 50,
-        description: "Designs that span across multiple teeth."
-      },
-      "Custom Design": {
-        price: 100,
-        description: "Fully custom sculpted artwork. One of one."
-      }
+      "Cutouts / Windows": { price: 30, description: "Windows or shapes carved into the grill (hearts, stars, drips, etc.)" },
+      "Open Face": { price: 20, description: "Just the bottom edge of the tooth." },
+      "Engraving": { price: 40, description: "Add letters or small symbols to your grill." },
+      "Gem Inlay": { price: 75, description: "Set a gem into the tooth." },
+      "Texture Finish": { price: 30, description: "Matte, brushed, or textured surface." },
+      "Multi-Tooth Concepts": { price: 50, description: "Designs that span across multiple teeth." },
+      "Custom Design": { price: 100, description: "Fully custom sculpted artwork. One of one." }
     };
 
     const CAST_COST_PER_TOOTH = 20;
@@ -229,31 +225,25 @@
     const addOnsContainer = document.getElementById("addOns");
 
     for (const [key, { price, description }] of Object.entries(DEFAULT_ADD_ONS)) {
-      const safeKey = key.replace(/\s+/g, '_').replace(/[^\w]/g, '');
+      const safeKey = key.replace(/\s+/g, '_').toLowerCase();
       const label = document.createElement("label");
       label.className = "checkbox-label";
 
-      const descBlock = document.createElement("div");
-      descBlock.style.display = "flex";
-      descBlock.style.flexDirection = "column";
-
+      const descWrapper = document.createElement("div");
       const titleSpan = document.createElement("span");
-      titleSpan.style.fontWeight = "bold";
-      titleSpan.textContent = key;
-
       const descriptionSpan = document.createElement("span");
-      descriptionSpan.style.fontSize = "0.85rem";
-      descriptionSpan.style.color = "#222";
-      descriptionSpan.textContent = description;
 
-      descBlock.appendChild(titleSpan);
-      descBlock.appendChild(descriptionSpan);
+      titleSpan.innerText = key;
+      descriptionSpan.className = "description";
+      descriptionSpan.innerText = description;
+      descWrapper.appendChild(titleSpan);
+      descWrapper.appendChild(descriptionSpan);
 
-      const quantity = document.createElement("input");
-      quantity.type = "number";
-      quantity.min = "0";
-      quantity.value = "0";
-      quantity.id = `qty-${safeKey}`;
+      const qtyInput = document.createElement("input");
+      qtyInput.type = "number";
+      qtyInput.min = "0";
+      qtyInput.value = "0";
+      qtyInput.id = `qty-${safeKey}`;
 
       const priceInput = document.createElement("input");
       priceInput.type = "number";
@@ -261,10 +251,11 @@
       priceInput.step = "0.01";
       priceInput.value = price;
       priceInput.id = `price-${safeKey}`;
-      priceInput.className = 'price-tag';
+      priceInput.classList.add('price-tag');
+      priceInput.setAttribute('readonly', true);
 
-      label.appendChild(descBlock);
-      label.appendChild(quantity);
+      label.appendChild(descWrapper);
+      label.appendChild(qtyInput);
       label.appendChild(priceInput);
       addOnsContainer.appendChild(label);
     }
@@ -272,88 +263,75 @@
     let latestQuote = {};
 
     function generateQuote() {
+      document.getElementById('chaChing').play();
+
       const clientName = document.getElementById("clientName").value || "Unnamed Client";
       const material = document.getElementById("material").value;
       const toothCount = parseInt(document.getElementById("toothCount").value);
+      const basePrice = BASE_PRICES[material];
 
-      const addOnSelections = {};
       let addOnTotal = 0;
+      const selectedAddOns = [];
 
-      for (const [key] of Object.entries(DEFAULT_ADD_ONS)) {
-        const safeKey = key.replace(/\s+/g, '_').replace(/[^\w]/g, '');
+      for (const key in DEFAULT_ADD_ONS) {
+        const safeKey = key.replace(/\s+/g, '_').toLowerCase();
         const qty = parseInt(document.getElementById(`qty-${safeKey}`).value) || 0;
         const price = parseFloat(document.getElementById(`price-${safeKey}`).value) || 0;
 
         if (qty > 0) {
-          addOnSelections[key] = { qty, price };
-          addOnTotal += price * qty;
+          selectedAddOns.push(`${key} x${qty} (€${price})`);
+          addOnTotal += qty * price;
         }
       }
 
-      const basePrice = BASE_PRICES[material];
-      const totalSale = (basePrice * toothCount) + addOnTotal;
-      const totalCost = (CAST_COST_PER_TOOTH * toothCount) + IMPRESSION_COST;
+      const totalSale = basePrice * toothCount + addOnTotal;
+      const totalCost = CAST_COST_PER_TOOTH * toothCount + IMPRESSION_COST;
       const profit = totalSale - totalCost;
       const margin = ((profit / totalSale) * 100).toFixed(2);
       const deposit = (totalSale * 0.5).toFixed(2);
 
-      const addOnSummary = Object.entries(addOnSelections)
-        .map(([key, data]) => `${key} x${data.qty} (€${data.price})`)
-        .join(', ') || 'None';
-
-      latestQuote = {
-        clientName,
-        material,
-        toothCount,
-        addOnSummary,
-        totalSale,
-        deposit,
-        profit,
-        totalCost,
-        margin
-      };
+      latestQuote = { clientName, material, toothCount, selectedAddOns, totalSale, deposit, profit, totalCost, margin };
 
       document.getElementById("results").style.display = "block";
       document.getElementById("results").innerHTML = `
         <h3>Quote for ${clientName}</h3>
         <p><strong>Material:</strong> ${material.replace('_', ' ')}</p>
-        <p><strong>Number of Teeth:</strong> ${toothCount}</p>
-        <p><strong>Add-Ons:</strong> ${addOnSummary}</p>
+        <p><strong>Teeth:</strong> ${toothCount}</p>
+        <p><strong>Add-ons:</strong> ${selectedAddOns.join(', ') || 'None'}</p>
         <p><strong>Total Sale Price:</strong> €${totalSale.toFixed(2)}</p>
-        <p><strong>Deposit Due (50%):</strong> €${deposit}</p>
+        <p><strong>Deposit Due:</strong> €${deposit}</p>
       `;
 
       document.getElementById("profitInfo").innerHTML = `
         <p><strong>Profit:</strong> €${profit.toFixed(2)}</p>
+        <p><strong>Cost:</strong> €${totalCost.toFixed(2)}</p>
         <p><strong>Margin:</strong> ${margin}%</p>
-        <p><strong>Total Cost:</strong> €${totalCost.toFixed(2)}</p>
       `;
     }
 
-    async function downloadPDF() {
+    function downloadPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       doc.setFontSize(12);
-
       const lines = [
         `Quote for ${latestQuote.clientName}`,
-        `Material: ${latestQuote.material.replace('_', ' ')}`,
+        `Material: ${latestQuote.material}`,
         `Teeth: ${latestQuote.toothCount}`,
-        `Add-Ons: ${latestQuote.addOnSummary}`,
+        `Add-ons: ${latestQuote.selectedAddOns.join(', ')}`,
         `Total Sale Price: €${latestQuote.totalSale.toFixed(2)}`,
-        `Deposit Due (50%): €${latestQuote.deposit}`
+        `Deposit Due: €${latestQuote.deposit}`
       ];
-
       lines.forEach((line, i) => doc.text(line, 10, 20 + i * 10));
-      doc.save('sweet-toof-quote.pdf');
+      doc.save("sweet-toof-quote.pdf");
     }
 
     function revealProfit() {
-      const password = prompt("Enter password to view profit details:");
-      if (password === "IODICE25") {
+      const pass = prompt("Password?");
+      if (pass === "IODICE25") {
         document.getElementById("profitInfo").style.display = "block";
+        document.querySelectorAll('.price-tag').forEach(el => el.removeAttribute('readonly'));
       } else {
-        alert("Incorrect password.");
+        alert("Nope.");
       }
     }
   </script>

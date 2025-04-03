@@ -5,27 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sweet Toof Quote Calculator</title>
   <style>
-    :root {
-      --red: #E22A27;
-      --gold: #E7AC15;
-      --navy: #374D7D;
-    }
-
     body {
       font-family: Arial, sans-serif;
-      background-color: #E7AC15 !important;
-      color: #222;
+      background-color: #ffffff;
+      color: #000;
       max-width: 700px;
       margin: 2rem auto;
       padding: 2rem;
       border-radius: 12px;
-      background-image: none !important;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      background-image: none;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     h1 {
       text-align: center;
-      color: var(--navy);
       margin-bottom: 1.5rem;
     }
 
@@ -33,7 +26,6 @@
       display: block;
       margin-bottom: 1rem;
       font-weight: bold;
-      color: var(--navy);
     }
 
     select, input[type="text"], input[type="number"] {
@@ -43,6 +35,7 @@
       border: 1px solid #ccc;
       font-size: 1rem;
       margin-top: 0.3rem;
+      box-sizing: border-box;
     }
 
     .form-row {
@@ -55,7 +48,7 @@
     }
 
     button {
-      background-color: var(--red);
+      background-color: #000;
       color: white;
       border: none;
       padding: 0.75rem;
@@ -68,8 +61,7 @@
     }
 
     button:hover {
-      background-color: #EA86A3;
-      color: #222;
+      background-color: #333;
     }
 
     .checkbox-group {
@@ -80,29 +72,26 @@
 
     .checkbox-label {
       display: grid;
-      grid-template-columns: 1fr 80px 80px;
+      grid-template-columns: 1fr 100px 100px;
       align-items: center;
-      background-color: #fff;
+      background-color: #f7f7f7;
       padding: 0.6rem;
       border-radius: 6px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.05);
       gap: 10px;
     }
 
     .checkbox-label input[type="number"] {
       width: 100%;
-      text-align: center;
-    }
-
-    .checkbox-label span.price-tag::before {
-      content: '€';
-      margin-right: 2px;
+      box-sizing: border-box;
+      padding: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
 
     .results {
       background-color: #f1f1f1;
       padding: 1rem;
-      border-left: 5px solid var(--navy);
+      border-left: 5px solid #000;
       border-radius: 8px;
       margin-top: 1.5rem;
     }
@@ -121,7 +110,7 @@
       display: block;
       margin-top: 0.5rem;
       font-weight: bold;
-      color: darkred;
+      color: #000;
       text-decoration: none;
     }
 
@@ -132,10 +121,10 @@
     .profit-section {
       display: none;
       margin-top: 1rem;
-      background: #fff9c4;
+      background: #eee;
       padding: 1rem;
       border-radius: 8px;
-      border-left: 4px solid var(--gold);
+      border-left: 4px solid #888;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

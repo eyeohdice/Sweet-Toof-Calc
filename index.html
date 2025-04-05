@@ -166,11 +166,48 @@
       text-align: right;
       margin-top: 0.5rem;
     }
+
+    /* Modal styles */
+    #disclaimerModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #disclaimerModal .content {
+      background: #fff;
+      color: #000;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      position: relative;
+      font-family: Arial, sans-serif;
+    }
+
+    #disclaimerModal .content span {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: var(--red);
+    }
+
+    #disclaimerModal h3 {
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
   <div class="logo-container">
     <img src="sweet-toof-logo.png" alt="Sweet Toof Logo" />
+    <button onclick="toggleDisclaimer()" style="margin-bottom: 10px;">Legal Disclaimer</button>
     <a href="https://www.instagram.com/Sweet.Toof.cy" target="_blank">@SweetToof.cy – Book Now!</a>
   </div>
 
@@ -206,13 +243,31 @@
   <div id="results" class="results" style="display:none;"></div>
   <div id="profitInfo" class="profit-section" style="display:none;"></div>
 
-  <!-- 🔊 Audio: Make sure this file exists next to your HTML! -->
+  <!-- Cha-ching audio -->
   <audio id="chaChing" preload="auto">
     <source src="cash-register.mp3" type="audio/mpeg" />
     Your browser does not support the audio element.
   </audio>
 
+  <!-- Legal Disclaimer Modal -->
+  <div id="disclaimerModal">
+    <div class="content">
+      <span onclick="toggleDisclaimer()">&times;</span>
+      <h3>Legal Disclaimer</h3>
+      <p>
+        Sweet Toof is not a licensed dental professional. We do not take or process dental impressions ourselves.
+        All impressions must be obtained through a certified dentist or dental technician. Any grillz created by Sweet Toof are intended for decorative and aesthetic purposes only, and are not meant to replace, repair, or interfere with natural teeth or dental appliances.
+        Clients assume full responsibility for the use and wear of custom grillz.
+      </p>
+    </div>
+  </div>
+
   <script>
+    function toggleDisclaimer() {
+      const modal = document.getElementById("disclaimerModal");
+      modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+    }
+
     const BASE_PRICES = {
       cobalt_chrome: 60,
       gold_plated: 100,
